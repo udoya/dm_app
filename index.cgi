@@ -1,7 +1,4 @@
-#!/usr/keio/Anaconda3-2024.10-1/bin/python
-
-import cgitb
-cgitb.enable()
+#!/usr/keio/Anaconda3-2025.12-2/bin/python
 
 from wsgiref.handlers import CGIHandler
 import os

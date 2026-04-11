@@ -1,4 +1,4 @@
-#!/usr/keio/Anaconda3-2024.10-1/bin/python
+#!/usr/keio/Anaconda3-2025.12-2/bin/python
 """
 データベースを使った Web アプリケーションのサンプル.
 
