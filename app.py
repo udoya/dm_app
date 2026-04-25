@@ -204,6 +204,8 @@ def employee(id: str) -> str:
     （社員が見つからない旨が記載されている）
     をレンダリングして返す。
 
+    Args:
+      id (str): 指定する社員番号
     Returns:
       str: ページのコンテンツ
     """
@@ -394,6 +396,8 @@ def employee_add_results(code: str) -> str:
     テンプレート employee-add-results.html
     へ処理結果コード code に基づいたメッセージを渡してレンダリングして返す。
 
+    Args:
+      code (str): 処理結果コード
     Returns:
       str: ページのコンテンツ
     """
@@ -418,6 +422,8 @@ def employee_del(id: str) -> str:
     テンプレート employee-del-results.html
     へ理由を渡してレンダリングして返す。
 
+    Args:
+      id (str): 指定する社員番号
     Returns:
       str: ページのコンテンツ
     """
@@ -474,6 +480,8 @@ def employee_del_execute(id: str) -> Response:
     employee_del_results へ処理結果コードを入れてリダイレクトする。
     （PRG パターンの P を受けて R を返す）
 
+    Args:
+      id (str): 指定する社員番号
     Returns:
       Response: リダイレクト情報
     """
@@ -536,6 +544,8 @@ def employee_del_results(code: str) -> str:
     テンプレート employee-del-results.html
     へ処理結果コード code に基づいたメッセージを渡してレンダリングして返す。
 
+    Args:
+      code (str): 処理結果コード
     Returns:
       str: ページのコンテンツ
     """
@@ -560,6 +570,8 @@ def employee_edit(id: str) -> str:
     テンプレート employee-edit-results.html
     へ理由を渡してレンダリングして返す。
 
+    Args:
+      id (str): 指定する社員番号
     Returns:
       str: ページのコンテンツ
     """
@@ -606,6 +618,8 @@ def employee_edit_update(id: str) -> Response:
     employee_edit_results へ処理結果コードを入れてリダイレクトする。
     （PRG パターンの P を受けて R を返す）
 
+    Args:
+      id (str): 指定する社員番号
     Returns:
       Response: リダイレクト情報
     """
@@ -731,6 +745,8 @@ def employee_edit_results(code: str) -> str:
     テンプレート employee-edit-results.html
     へ処理結果コード code に基づいたメッセージを渡してレンダリングして返す。
 
+    Args:
+      code (str): 処理結果コード
     Returns:
       str: ページのコンテンツ
     """
