@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 # 処理結果コードとメッセージ
 RESULT_MESSAGES: Final[dict[str, str]] = {
-    'id-has-invalid-charactor':
+    'id-has-invalid-character':
     '指定された社員番号には使えない文字があります - '
     '数字のみで指定してください',
     'id-already-exists':
@@ -31,22 +31,22 @@ RESULT_MESSAGES: Final[dict[str, str]] = {
     'id-is-manager':
     '指定された社員番号の社員には部下がいます - '
     '部下に登録された上司を変更してから削除してください',
-    'manager-id-has-invalid-charactor':
+    'manager-id-has-invalid-character':
     '指定された上司の社員番号には使えない文字があります - '
     '数字のみで指定してください',
     'manager-id-does-not-exist':
     '指定された上司の社員番号が存在しません - '
     '既に存在する社員番号か追加する社員の社員番号と同じものを指定してください',
-    'salary-has-invalid-charactor':
+    'salary-has-invalid-character':
     '指定された給与には使えない文字があります - '
     '数字のみで指定してください',
-    'birth-year-has-invalid-charactor':
+    'birth-year-has-invalid-character':
     '指定された生年には使えない文字があります - '
     '数字のみで指定してください',
-    'start-year-has-invalid-charactor':
+    'start-year-has-invalid-character':
     '指定された入社年には使えない文字があります - '
     '数字のみで指定してください',
-    'name-has-control-charactor':
+    'name-has-control-character':
     '指定された名前には制御文字があります - '
     '制御文字は指定しないでください',
     'database-error':
@@ -292,7 +292,7 @@ def employee_add_execute() -> Response:
     except ValueError:
         # 社員番号が整数型へ変換できない
         return redirect(url_for('employee_add_results',
-                                code='id-has-invalid-charactor'))
+                                code='id-has-invalid-character'))
     # 社員番号の存在チェックをする：
     # employees テーブルで同じ社員番号の行を 1 行だけ取り出す
     employee = cur.execute('SELECT id FROM employees WHERE id = ?',
@@ -311,7 +311,7 @@ def employee_add_execute() -> Response:
     except ValueError:
         # 社員番号が整数型へ変換できない
         return redirect(url_for('employee_add_results',
-                                code='manager-id-has-invalid-charactor'))
+                                code='manager-id-has-invalid-character'))
     if id != manager_id:
         # 指定された社員番号と上司の社員番号が不一致
         # →上司が別に存在する必要がある→上司の存在チェックをする：
@@ -333,7 +333,7 @@ def employee_add_execute() -> Response:
     except ValueError:
         # 給与が整数型へ変換できない
         return redirect(url_for('employee_add_results',
-                                code='salary-has-invalid-charactor'))
+                                code='salary-has-invalid-character'))
 
     #
     # 生年チェック
@@ -344,7 +344,7 @@ def employee_add_execute() -> Response:
     except ValueError:
         # 生年が整数型へ変換できない
         return redirect(url_for('employee_add_results',
-                                code='birth-year-has-invalid-charactor'))
+                                code='birth-year-has-invalid-character'))
 
     #
     # 入社年チェック
@@ -355,7 +355,7 @@ def employee_add_execute() -> Response:
     except ValueError:
         # 入社年が整数型へ変換できない
         return redirect(url_for('employee_add_results',
-                                code='start-year-has-invalid-charactor'))
+                                code='start-year-has-invalid-character'))
 
     #
     # 名前チェック
@@ -363,7 +363,7 @@ def employee_add_execute() -> Response:
     if has_control_character(name):
         # 名前に制御文字が含まれる
         return redirect(url_for('employee_add_results',
-                                code='name-has-control-charactor'))
+                                code='name-has-control-character'))
 
     # データベースへ社員を追加
     try:
@@ -495,7 +495,7 @@ def employee_del_execute(id: str) -> Response:
     except ValueError:
         # 社員番号が整数型へ変換できない
         return redirect(url_for('employee_del_results',
-                                code='id-has-invalid-charactor'))
+                                code='id-has-invalid-character'))
     # 社員番号の存在チェックをする：
     # employees テーブルで同じ社員番号の行を 1 行だけ取り出す
     employee = cur.execute('SELECT id FROM employees WHERE id = ?',
@@ -503,7 +503,7 @@ def employee_del_execute(id: str) -> Response:
     if employee is None:
         # 指定された社員番号の行が無い
         return redirect(url_for('employee_del_results',
-                                code='id-does-not-exsit'))
+                                code='id-does-not-exist'))
 
     # 部下の存在チェック：
     # employees テーブルで指定された社員番号を上司にしている社員、かつ、
@@ -522,13 +522,13 @@ def employee_del_execute(id: str) -> Response:
         cur.execute('DELETE FROM employees WHERE id = ?', (id_num,))
     except sqlite3.Error:
         # データベースエラーが発生
-        return redirect(url_for('employee_add_results',
+        return redirect(url_for('employee_del_results',
                                 code='database-error'))
     # コミット（データベース更新処理を確定）
     con.commit()
 
     # 社員追加完了
-    return redirect(url_for('employee_add_results',
+    return redirect(url_for('employee_del_results',
                             code='deleted'))
 
 
@@ -633,7 +633,7 @@ def employee_edit_update(id: str) -> Response:
     except ValueError:
         # 社員番号が整数型へ変換できない
         return redirect(url_for('employee_edit_results',
-                                code='id-has-invalid-charactor'))
+                                code='id-has-invalid-character'))
     # 社員番号の存在チェックをする：
     # employees テーブルで同じ社員番号の行を 1 行だけ取り出す
     employee = cur.execute('SELECT id FROM employees WHERE id = ?',
@@ -659,7 +659,7 @@ def employee_edit_update(id: str) -> Response:
     except ValueError:
         # 社員番号が整数型へ変換できない
         return redirect(url_for('employee_edit_results',
-                                code='manager-id-has-invalid-charactor'))
+                                code='manager-id-has-invalid-character'))
     if id_num != manager_id:
         # 指定された社員番号と上司の社員番号が不一致
         # →上司が別に存在する必要がある→上司の存在チェックをする：
@@ -681,7 +681,7 @@ def employee_edit_update(id: str) -> Response:
     except ValueError:
         # 給与が整数型へ変換できない
         return redirect(url_for('employee_edit_results',
-                                code='salary-has-invalid-charactor'))
+                                code='salary-has-invalid-character'))
 
     #
     # 生年チェック
@@ -692,7 +692,7 @@ def employee_edit_update(id: str) -> Response:
     except ValueError:
         # 生年が整数型へ変換できない
         return redirect(url_for('employee_edit_results',
-                                code='birth-year-has-invalid-charactor'))
+                                code='birth-year-has-invalid-character'))
 
     #
     # 入社年チェック
@@ -703,7 +703,7 @@ def employee_edit_update(id: str) -> Response:
     except ValueError:
         # 入社年が整数型へ変換できない
         return redirect(url_for('employee_edit_results',
-                                code='start-year-has-invalid-charactor'))
+                                code='start-year-has-invalid-character'))
 
     #
     # 名前チェック
@@ -711,7 +711,7 @@ def employee_edit_update(id: str) -> Response:
     if has_control_character(name):
         # 名前に制御文字が含まれる
         return redirect(url_for('employee_edit_results',
-                                code='name-has-control-charactor'))
+                                code='name-has-control-character'))
 
     # データベースを更新
     try:
